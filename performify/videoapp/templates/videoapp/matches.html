@@ -1,0 +1,47 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'videoapp/styles.css' %}">
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matching Videos</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+</head>
+
+<body class="matches-page">
+    <div class="matches-container">
+        <h2>Matching Videos:</h2>
+        {% for video in videos %}
+        <div class="video-item">
+            <h3>{{ video.title }} by {{ video.artist }}</h3>
+            <a href="{{ video.url }}" target="_blank" class="video-link">Watch Video</a>
+            <p>{{ video.description }}</p>
+            <p><strong>Tags:</strong> {{ video.tags }}</p>
+            <a href="{% url 'video_detail' video.id %}" class="details-link">View Details</a>
+        </div>
+        {% empty %}
+        <p>No matching videos found.</p>
+        {% endfor %}
+        {% if user.is_authenticated %}
+        <form method="post" action="{% url 'logout' %}" class="logout-form">
+            {% csrf_token %}
+            <button type="submit" class="auth-button">Logout</button>
+        </form>
+        {% else %}
+        <a href="{% url 'login' %}" class="auth-link">Login</a>
+        <a href="{% url 'signup' %}" class="auth-link">Signup</a>
+        {% endif %}
+        <!-- Go Back Button -->
+        <button onclick="goBack()" class="auth-button">Go Back</button>
+    </div>
+
+</body>
+
+</html>
+<script>
+    function goBack() {
+        window.history.back();  // Navigates to the previous page in the browser's history
+    }
+</script>

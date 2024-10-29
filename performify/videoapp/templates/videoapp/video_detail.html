@@ -1,0 +1,44 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'videoapp/styles.css' %}">
+
+{% load custom_filters %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ video.title }}</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+</head>
+
+<body class="video-detail-page">
+    <div class="video-detail-container">
+        <h2>{{ video.title }} by {{ video.artist }}</h2>
+        <iframe width="560" height="315" src="{{ video.url|youtube_embed }}" frameborder="0"
+            allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+        <div class="video-info">
+            <p>{{ video.description }}</p>
+            <p><strong>Tags:</strong> {{ video.tags }}</p>
+            <p><strong>Artist Bio:</strong> {{ video.artist_description }}</p>
+        </div>
+        {% if user.is_authenticated %}
+        <form method="post" action="{% url 'logout' %}" class="logout-form">
+            {% csrf_token %}
+            <button type="submit" class="auth-button">Logout</button>
+        </form>
+        {% else %}
+        <a href="{% url 'login' %}" class="auth-link">Login</a>
+        <a href="{% url 'signup' %}" class="auth-link">Signup</a>
+        {% endif %}
+        <button onclick="goBack()" class="auth-button">Go Back</button>
+    </div>
+</body>
+
+</html>
+<script>
+    function goBack() {
+        window.history.back();  // Navigates to the previous page in the browser's history
+    }
+</script>

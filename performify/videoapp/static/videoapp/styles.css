@@ -1,0 +1,79 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #181818;
+  color: #f0f0f0;
+  margin: 0;
+  padding: 0;
+}
+
+.auth-page,
+.video-detail-page,
+.matches-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.auth-container,
+.video-detail-container,
+.matches-container {
+  background-color: #252525;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  max-width: 600px;
+  text-align: center;
+}
+
+h2 {
+  color: #ff6363;
+}
+
+.auth-button,
+.auth-link,
+.details-link,
+.video-link {
+  background-color: #ff6363;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  text-decoration: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 10px 0;
+  display: inline-block;
+}
+
+.auth-button:hover,
+.auth-link:hover,
+.details-link:hover,
+.video-link:hover {
+  background-color: #ff4141;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+form input,
+form button {
+  width: 100%;
+  max-width: 400px;
+  margin-bottom: 15px;
+}
+
+.video-item {
+  background-color: #333;
+  padding: 15px;
+  margin: 10px 0;
+  border-radius: 5px;
+  text-align: left;
+}
+
+.video-item h3,
+.video-item p {
+  margin: 5px 0;
+}
