@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artist Dashboard</title>
+    <link rel="stylesheet" href="{% static 'videoapp/styles.css' %}">
+</head>
+<body class="auth-page">
+    <div class="auth-container">
+        <h2>Welcome, {{ user.username }} (Artist)</h2>
+
+        <!-- Video Search Bar -->
+        <form method="POST" action="{% url 'video_search' %}">
+            {% csrf_token %}
+            <label for="main_category">Select a Category:</label>
+            <select id="main_category" name="main_category">
+                <option value="Wedding">Wedding</option>
+                <option value="Party">Party</option>
+                <option value="Live">Live</option>
+            </select>
+
+            <label for="sub_category">Select a SubCategory:</label>
+            <select id="sub_category" name="sub_category">
+                <option value="">Select a category first</option>
+            </select>
+
+            <label>Select Tags:</label>
+            <div id="tags_container"></div>
+
+            <button type="submit" class="search-button">Search Videos</button>
+        </form>
+
+        <!-- Display Artist's Uploaded Videos -->
+        <h3>Your Uploaded Videos</h3>
+        <div class="matches-container">
+            {% for video in artist_videos %}
+            <div class="video-item">
+                <h4>{{ video.title }}</h4>
+                <p><strong>Description:</strong> {{ video.description }}</p>
+                <p><strong>Tags:</strong> {{ video.tags }}</p>
+                <p><strong>Artist Bio:</strong> {{ video.artist_description }}</p>
+                <a href="{{ video.url }}" target="_blank" class="video-link">Watch Video</a>
+            </div>
+            {% empty %}
+            <p>No videos uploaded yet.</p>
+            {% endfor %}
+        </div>
+    </div>
+    <script src="{% static 'videoapp/js/cascading_dropdowns.js' %}"></script>
+</body>
+</html>

@@ -20,6 +20,7 @@
 
         <div class="video-info">
             <p>{{ video.description }}</p>
+            <p>{{video.url}}</p>
             <p><strong>Tags:</strong> {{ video.tags }}</p>
             <p><strong>Artist Bio:</strong> {{ video.artist_description }}</p>
         </div>
@@ -28,9 +29,6 @@
             {% csrf_token %}
             <button type="submit" class="auth-button">Logout</button>
         </form>
-        {% else %}
-        <a href="{% url 'login' %}" class="auth-link">Login</a>
-        <a href="{% url 'signup' %}" class="auth-link">Signup</a>
         {% endif %}
         <button onclick="goBack()" class="auth-button">Go Back</button>
     </div>

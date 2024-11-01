@@ -35,7 +35,7 @@
             {{ form.as_p }}
             <button type="submit" class="auth-button">Login</button>
         </form>
-
+        <p>Are you an Artist? <a href="{% url 'artist_login' %}">Login as Artist</a></p>
         <p>Don't have an account? <a href="{% url 'signup' %}">Sign up here</a></p>
     </div>
 </body>

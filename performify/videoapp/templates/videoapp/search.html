@@ -93,24 +93,25 @@
         <h2>Search Videos by Tags</h2>
         <form method="POST">
             {% csrf_token %}
-
+          
             <label for="main_category">Select a category:</label>
             <select id="main_category" name="main_category" onchange="updateFilters()">
                 <option value="Wedding">Wedding</option>
                 <option value="Party">Party</option>
                 <option value="Live">Live</option>
             </select>
-
+          
             <label for="sub_category">Select a type:</label>
             <select id="sub_category" name="sub_category">
                 <option value="">Select a category first</option>
             </select>
-
+          
             <label>Select Additional Tags:</label>
-            <div id="tags_container" class="tags-container"></div>
-
+            <div id="tags_container"></div>
+          
             <button type="submit">Search Videos</button>
-        </form>
+          </form>
+          
 
         <div class="auth-section">
             {% if user.is_authenticated %}
@@ -119,25 +120,22 @@
                 {% csrf_token %}
                 <button type="submit" class="auth-button">Logout</button>
             </form>
-            {% else %}
+            <!-- {% else %}
             <a href="{% url 'login' %}">Login</a>
-            <a href="{% url 'signup' %}">Signup</a>
-            {% endif %}
+            <a href="{% url 'signup' %}">Signup</a> -->
+            {% endif %} 
             <button onclick="goBack()" class="auth-button">Go Back</button>
         </div>
     </div>
 
     <script>
-        // Data for sub-categories and tags
-        function goBack() {
-            window.history.back();  // Navigates to the previous page in the browser's history
-        }
+        // Define categories, sub-categories, and tags based on your requirements
         const filterData = {
             Wedding: {
                 subCategories: ["Instrumental", "DJ"],
                 tags: {
                     Instrumental: ["Guitar", "Piano", "Violin"],
-                    DJ: []
+                    DJ: []  // DJ has no tags
                 }
             },
             Party: {
@@ -155,17 +153,17 @@
                 }
             }
         };
-
+      
         // Function to update the sub-category options and tags based on the main category
         function updateFilters() {
             const mainCategory = document.getElementById("main_category").value;
             const subCategorySelect = document.getElementById("sub_category");
             const tagsContainer = document.getElementById("tags_container");
-
+      
             // Clear sub-category and tag fields
             subCategorySelect.innerHTML = "";
             tagsContainer.innerHTML = "";
-
+      
             if (mainCategory) {
                 // Populate sub-categories
                 const subCategories = filterData[mainCategory].subCategories;
@@ -175,7 +173,7 @@
                     option.textContent = subCat;
                     subCategorySelect.appendChild(option);
                 });
-
+      
                 // Populate tags based on the selected sub-category
                 subCategorySelect.onchange = function () {
                     tagsContainer.innerHTML = "";  // Clear tags container
@@ -188,23 +186,27 @@
                             checkbox.name = "tags";
                             checkbox.value = tag;
                             checkbox.id = tag;
-
+      
                             const label = document.createElement("label");
                             label.htmlFor = tag;
                             label.textContent = tag;
-
+      
                             const div = document.createElement("div");
-                            div.classList.add("tag-item");
                             div.appendChild(checkbox);
                             div.appendChild(label);
-
+      
                             tagsContainer.appendChild(div);
                         });
                     }
                 };
             }
         }
-    </script>
+      
+        // Initialize filters on page load
+        document.addEventListener("DOMContentLoaded", () => {
+            updateFilters();
+        });
+      </script>
 </body>
 
 </html>

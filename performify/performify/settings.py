@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-xx8grvis58t2c)k@#y4ns4meok(r7f_e8l+04pel2=&^=4c3ps
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["performifybeta-production.up.railway.app"]
+ALLOWED_HOSTS = ["performifybeta-production.up.railway.app","*"]
 CSRF_TRUSTED_ORIGINS = [
     'https://performifybeta-production.up.railway.app'
 ]

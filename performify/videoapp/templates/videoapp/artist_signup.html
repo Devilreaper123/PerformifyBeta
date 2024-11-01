@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artist Signup</title>
+    <link rel="stylesheet" href="{% static 'videoapp/styles.css' %}">
+</head>
+
+<body class="auth-page">
+    <div class="auth-container">
+        <h2>Artist Signup</h2>
+        <p>Sign up and add your first video as an artist!</p>
+
+        <!-- User Signup Form -->
+        <form method="post">
+            {% csrf_token %}
+            {{ user_form.as_p }}
+
+            <!-- Video Form Fields -->
+            <h3>Add Video Details</h3>
+            {{ video_form.as_p }}
+
+            <!-- Buttons -->
+            <button type="submit" name="add_video" class="auth-button">Add Video</button>
+            <button type="submit" name="check_availability" class="auth-button">Check Availability</button>
+        </form>
+
+        <!-- Display Availability Message if Present -->
+        {% if availability_message %}
+        <p>{{ availability_message }}</p>
+        {% endif %}
+    </div>
+</body>
+
+</html>
+<style>
+    /* Optional: Different styling for each button */
+    .auth-button {
+        background-color: #ff6363;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 10px;
+    }
+
+    .auth-button[name="check_availability"] {
+        background-color: #333;
+        color: #fff;
+        border: 1px solid #ff6363;
+    }
+
+    .auth-button:hover {
+        background-color: #ff4141;
+    }
+</style>

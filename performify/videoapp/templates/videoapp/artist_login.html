@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artist Login</title>
+    <link rel="stylesheet" href="{% static 'videoapp/styles.css' %}">
+</head>
+<style>
+    /* Optional: Different Background for Artist Login */
+    .artist-auth-page .auth-container {
+        background-color: #2b2b2b;
+        /* Slightly different shade */
+        color: #ffffff;
+    }
+</style>
+
+<body class="auth-page">
+    <div class="auth-container">
+        <h2>Artist Login</h2>
+        <p>Log in to manage your artist profile and upload new videos.</p>
+        <form method="post" action="{% url 'artist_login' %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="auth-button">Login as Artist</button>
+        </form>
+
+        <p>Are you not an artist? <a href="{% url 'login' %}">Login as a regular user</a></p>
+        <p>Don't have an account? <a href="{% url 'artist_signup' %}">Sign up here</a></p>
+    </div>
+</body>
+
+</html>

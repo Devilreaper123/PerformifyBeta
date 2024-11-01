@@ -1,22 +1,92 @@
-{% load static %}
-<link rel="stylesheet" href="{% static 'videoapp/styles.css' %}">
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+    {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Matching Videos</title>
-    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <link rel="stylesheet" href="{% static 'videoapp/styles.css' %}">
+    <style>
+        /* Container for all video items */
+        .matches-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Styling each video card */
+        .video-item {
+            background-color: #333;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            color: #f0f0f0;
+            transition: transform 0.3s;
+        }
+
+        .video-item h3 {
+            font-size: 1.2em;
+            color: #ff6363;
+            margin-top: 0;
+        }
+
+        .video-item p {
+            font-size: 0.9em;
+        }
+
+        /* Link button styling */
+        .details-link {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 8px 12px;
+            background-color: #ff6363;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 0.9em;
+        }
+
+        /* Hover effect */
+        .video-item:hover {
+            transform: scale(1.05);
+        }
+
+        /* Auth buttons container */
+        .auth-buttons-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        /* Auth button styling */
+        .auth-button {
+            background-color: #ff6363;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px 0;
+            width: 100px;
+            text-align: center;
+        }
+
+        .auth-button:hover {
+            background-color: #ff4141;
+        }
+    </style>
 </head>
 
 <body class="matches-page">
     <div class="matches-container">
-        <h2>Matching Videos:</h2>
         {% for video in videos %}
         <div class="video-item">
-            <h3>{{ video.title }} by {{ video.artist }}</h3>
-            <a href="{{ video.url }}" target="_blank" class="video-link">Watch Video</a>
+            <h3>{{ video.title }} by {{ video.artist.username }}</h3>
             <p>{{ video.description }}</p>
             <p><strong>Tags:</strong> {{ video.tags }}</p>
             <a href="{% url 'video_detail' video.id %}" class="details-link">View Details</a>
@@ -24,22 +94,21 @@
         {% empty %}
         <p>No matching videos found.</p>
         {% endfor %}
-        {% if user.is_authenticated %}
-        <form method="post" action="{% url 'logout' %}" class="logout-form">
-            {% csrf_token %}
-            <button type="submit" class="auth-button">Logout</button>
-        </form>
-        {% else %}
-        <a href="{% url 'login' %}" class="auth-link">Login</a>
-        <a href="{% url 'signup' %}" class="auth-link">Signup</a>
-        {% endif %}
-        <!-- Go Back Button -->
-        <button onclick="goBack()" class="auth-button">Go Back</button>
+        <div class="auth-buttons-container">
+            {% if user.is_authenticated %}
+            <form method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit" class="auth-button">Logout</button>
+            </form>
+            {% endif %}
+            <button onclick="goBack()" class="auth-button">Go Back</button>
+        </div>
     </div>
-
+    
 </body>
 
 </html>
+
 <script>
     function goBack() {
         window.history.back();  // Navigates to the previous page in the browser's history
